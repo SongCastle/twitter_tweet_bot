@@ -2,9 +2,20 @@
 Tweet Bot with Twitter's V2 API.<br/>
 （by Twitter's V2 API / OAuth 2.0 with PCKE）
 
+## Getting Started
+
+```rb
+# Gemfile
+gem 'twitter_tweet_bot'
+```
+
+Then run `bundle install`.
+
 ## Usage
 
 ```rb
+require 'twitter_tweet_bot'
+
 TwitterTweetBot.post_tweet(<ACEESS_TOKEN>, 'Yeah!')
 ```
 
@@ -62,7 +73,7 @@ e.g. https://example.com/twitter/callback?state=***&code=*****
 #### Step4. Fetch an access token
 
 ```rb
-token = TwitterTweetBot.fetch_token('<CODE_IN_STEP3>', authorization.code_verifier)
+token = TwitterTweetBot.fetch_token('<CODE>', authorization.code_verifier)
 # =>
 #  #<TwitterTweetBot::Entity::Token
 #   @access_token="<YOUR_ACCESS_TOKEN>",
@@ -133,24 +144,25 @@ TwitterTweetBot.authorization
 
 #### Step3. Fetch an access token
 
-Don't need to pass `code_verifier`.<br/>
-(resolved from cache)
 
 ```rb
 # `access_token` and `refresh_token` will be cached.
-TwitterTweetBot.fetch_token('<CODE_IN_STEP3>')
+TwitterTweetBot.fetch_token('<CODE>')
 ```
 
-#### Step5. Post a tweet
-
-Don't need to pass `access_token`.<br/>
+Don't need to pass `code_verifier`.<br/>
 (resolved from cache)
+
+#### Step4. Post a tweet
 
 ```rb
 TwitterTweetBot.post_tweet('Yeah!')
 ```
 
-#### Ex. Check an cache
+Don't need to pass `access_token`.<br/>
+(resolved from cache)
+
+#### Ex. Check a cache
 
 ```rb
 TwitterTweetBot.client.cache.read
