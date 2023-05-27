@@ -15,15 +15,13 @@ module TwitterTweetBot
         end
 
         def to_cache
-          cache_fields.reduce({}) do |hash, cache_field|
+          cache_fields.each_with_object({}) do |cache_field, hash|
             next hash unless respond_to?(cache_field)
 
             value = send(cache_field)
             next hash if value.nil?
 
             hash[cache_field] = value
-
-            hash
           end
         end
       end

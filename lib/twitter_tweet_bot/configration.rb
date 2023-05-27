@@ -23,9 +23,8 @@ module TwitterTweetBot
     end
 
     def to_hash
-      instance_variables.reduce({}) do |hash, key|
+      instance_variables.each_with_object({}) do |key, hash|
         hash[key[1..].to_sym] = instance_variable_get(key)
-        hash
       end
     end
   end
