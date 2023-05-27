@@ -15,12 +15,6 @@ Layout/ArgumentAlignment:
     - 'lib/twitter_tweet_bot/api/http/post.rb'
 
 # Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Layout/LeadingEmptyLines:
-  Exclude:
-    - 'lib/twitter_tweet_bot/entity/user.rb'
-
-# Offense count: 1
 Lint/DuplicateMethods:
   Exclude:
     - 'lib/twitter_tweet_bot/cache/configuration_ext.rb'
