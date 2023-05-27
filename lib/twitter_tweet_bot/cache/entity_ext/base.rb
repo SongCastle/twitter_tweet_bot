@@ -20,6 +20,7 @@ module TwitterTweetBot
 
             value = send(cache_field)
             next hash if value.nil?
+
             hash[cache_field] = value
 
             hash

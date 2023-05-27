@@ -14,14 +14,6 @@ Layout/ArgumentAlignment:
   Exclude:
     - 'lib/twitter_tweet_bot/api/http/post.rb'
 
-# Offense count: 3
-# This cop supports safe autocorrection (--autocorrect).
-Layout/EmptyLineAfterGuardClause:
-  Exclude:
-    - 'lib/twitter_tweet_bot/cache/caching.rb'
-    - 'lib/twitter_tweet_bot/cache/entity_ext/base.rb'
-    - 'lib/twitter_tweet_bot/cache/store.rb'
-
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 Layout/LeadingEmptyLines:

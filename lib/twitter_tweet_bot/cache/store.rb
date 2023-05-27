@@ -32,6 +32,7 @@ module TwitterTweetBot
 
       def deserialize_value(value)
         return {} if value.nil?
+
         JSON.parse(value, symbolize_names: true)
       end
 

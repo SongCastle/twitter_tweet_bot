@@ -25,6 +25,7 @@ module TwitterTweetBot
 
       def to_cache_object(object)
         return {} unless object.respond_to?(:to_cache)
+
         object.to_cache
       end
     end
