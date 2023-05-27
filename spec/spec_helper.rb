@@ -99,4 +99,9 @@ RSpec.configure do |config|
   # test failures related to randomization by passing the same `--seed` value
   # as the one that triggered the failure.
   Kernel.srand(config.seed)
+
+  # Define a default metadata. `aggregate_failures` is set as true.
+  config.define_derived_metadata do |metadata|
+    metadata[:aggregate_failures] = true unless metadata.key?(:aggregate_failures)
+  end
 end
