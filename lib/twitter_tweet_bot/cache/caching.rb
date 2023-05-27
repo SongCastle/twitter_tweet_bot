@@ -7,7 +7,7 @@ module TwitterTweetBot
 
       def with_cache(&block)
         current_cache = read_cache
-        result = yield(current_cache)
+        result = block.call(current_cache)
         write_cache(current_cache, result)
 
         result
@@ -25,6 +25,7 @@ module TwitterTweetBot
 
       def to_cache_object(object)
         return {} unless object.respond_to?(:to_cache)
+
         object.to_cache
       end
     end

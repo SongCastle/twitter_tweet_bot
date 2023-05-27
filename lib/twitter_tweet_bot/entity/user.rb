@@ -1,4 +1,3 @@
-
 require 'twitter_tweet_bot/entity/base'
 
 module TwitterTweetBot

@@ -3,15 +3,14 @@ module TwitterTweetBot
     module HTTP
       module Error
         class RequestFaild < StandardError
-          attr_reader :code, :body
-
           def initialize(code, body)
-            @code = code
-            @body = body
+            super(format_message(code, body))
           end
 
-          def inspect
-            "#<#{self.class} #{code} #{body}>"
+          private
+
+          def format_message(code, body)
+            [code, body].join("\n")
           end
         end
 

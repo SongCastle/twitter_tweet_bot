@@ -1,6 +1,6 @@
 # twitter_tweet_bot
 Tweet Bot with Twitter's V2 API.<br/>
-（by Twitter's V2 API / OAuth 2.0 with PCKE）
+（by OAuth 2.0 with PCKE）
 
 ## Getting Started
 
@@ -19,7 +19,7 @@ require 'twitter_tweet_bot'
 TwitterTweetBot.post_tweet(<ACEESS_TOKEN>, 'Yeah!')
 ```
 
-1. Congiuration
+1. Configuration
 2. Issue Authorization URL
 3. Go to Authorization URL
 4. Fetch Access Token
@@ -29,7 +29,7 @@ TwitterTweetBot.post_tweet(<ACEESS_TOKEN>, 'Yeah!')
 
 <summary>Details</summary>
 
-#### Step1. Congiuration
+#### Step1. Configuration
 
 ```rb
 require 'twitter_tweet_bot'
@@ -122,10 +122,10 @@ TwitterTweetBot.post_tweet('Yeah!')
 
 <summary>Details</summary>
 
-#### Step1. Congiuration
+#### Step1. Configuration
 
 ```rb
-require 'twitter_tweet_bot'
+require 'twitter_tweet_bot/cache'
 
 TwitterTweetBot.configure do |config|
   # ...

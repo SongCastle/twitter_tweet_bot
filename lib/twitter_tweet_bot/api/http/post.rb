@@ -39,7 +39,7 @@ module TwitterTweetBot
         end
 
         private_constant :JSON_CONTENT_TYPE,
-                        :URLENCODED_CONTENT_TYPE
+                         :URLENCODED_CONTENT_TYPE
       end
     end
   end
