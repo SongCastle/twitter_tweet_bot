@@ -7,11 +7,6 @@
 # versions of RuboCop, may require this file to be generated again.
 
 # Offense count: 1
-Lint/DuplicateMethods:
-  Exclude:
-    - 'lib/twitter_tweet_bot/cache/configuration_ext.rb'
-
-# Offense count: 1
 Lint/MissingSuper:
   Exclude:
     - 'lib/twitter_tweet_bot/api/http/error.rb'

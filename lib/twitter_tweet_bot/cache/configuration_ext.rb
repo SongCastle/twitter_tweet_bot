@@ -3,7 +3,8 @@ require 'twitter_tweet_bot/cache/store'
 module TwitterTweetBot
   module Cache
     module ConfigrationExt
-      attr_accessor :cache_provider, :cache
+      attr_accessor :cache_provider
+      attr_writer :cache
 
       def initialize(cache_provider: nil, **kwargs)
         @cache_provider = cache_provider
