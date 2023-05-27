@@ -11,11 +11,6 @@
 Metrics/ParameterLists:
   Max: 7
 
-# Offense count: 1
-Naming/AccessorMethodName:
-  Exclude:
-    - 'lib/twitter_tweet_bot/entity/base.rb'
-
 # Offense count: 31
 # Configuration parameters: AllowedConstants.
 Style/Documentation:

@@ -17,12 +17,12 @@ module TwitterTweetBot
       end
 
       def initialize(json)
-        set_fields!(Hash(json))
+        initialize_fields!(Hash(json))
       end
 
       private
 
-      def set_fields!(hash)
+      def initialize_fields!(hash)
         fields.each do |field|
           instance_variable_set(:"@#{field}", hash[field])
         end
