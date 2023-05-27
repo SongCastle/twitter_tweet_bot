@@ -37,7 +37,7 @@ module TwitterTweetBot
           state: state
         )
         uri = build_uri(AUTH_URL, build_body(secure_code))
-        return as_hash(uri.to_s, secure_code)
+        as_hash(uri.to_s, secure_code)
       end
 
       private
