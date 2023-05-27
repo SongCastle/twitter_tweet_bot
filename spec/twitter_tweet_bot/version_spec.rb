@@ -1,7 +1,10 @@
-RSpec.describe TwitterTweetBot do
-  describe '::VERSION' do
+RSpec.describe TwitterTweetBot::Version do
+  describe '::current' do
+    subject { described_class.current }
+
     it 'returns a current version' do
-      expect(described_class::VERSION).to eq('1.0.0')
+      expect(subject).to be_a(Gem::Version)
+      expect(subject.version).to eq('1.0.0')
     end
   end
 end

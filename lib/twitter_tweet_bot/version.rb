@@ -1,3 +1,7 @@
 module TwitterTweetBot
-  VERSION = '1.0.0'.freeze
+  module Version
+    def self.current
+      Gem::Version.new('1.0.0')
+    end
+  end
 end
