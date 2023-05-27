@@ -1,4 +1,9 @@
 inherit_from: .rubocop_todo.yml
+require: rubocop-rspec
 
 AllCops:
   NewCops: enable
+
+# Since using `aggregate_failures` metadata.
+RSpec/MultipleExpectations:
+  Enabled: false
