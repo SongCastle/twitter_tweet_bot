@@ -125,7 +125,7 @@ TwitterTweetBot.post_tweet('Yeah!')
 #### Step1. Configuration
 
 ```rb
-require 'twitter_tweet_bot'
+require 'twitter_tweet_bot/cache'
 
 TwitterTweetBot.configure do |config|
   # ...
