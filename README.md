@@ -59,7 +59,7 @@ authorization = TwitterTweetBot.authorization
 #   @url="https://twitter.com/i/oauth2/authorize?response_type=code&redirect_uri=<YOUR_REDIRECT_URI>&client_id=<YOUR_CLIENT_ID>&scope=<SCOPES>&code_challenge=*****&code_challenge_method=S256&state=***">
 ```
 
-#### Step3. Rerirect (or Go) to `authorization.url`
+#### Step3. Redirect (or Go) to `authorization.url`
 
 And smash `"Authorize app"`.
 
