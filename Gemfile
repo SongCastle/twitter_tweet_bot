@@ -10,4 +10,5 @@ end
 group :test do
   gem 'faker', '~> 3.2'
   gem 'rspec', '~> 3.12'
+  gem 'webmock', '~> 3.18'
 end
