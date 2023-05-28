@@ -7,3 +7,6 @@ AllCops:
 # Since using `aggregate_failures` metadata.
 RSpec/MultipleExpectations:
   Enabled: false
+
+RSpec/ImplicitSubject:
+  EnforcedStyle: single_statement_only

@@ -20,6 +20,7 @@ $LOAD_PATH.unshift(
 )
 
 require 'twitter_tweet_bot'
+require 'faker'
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
@@ -104,4 +105,7 @@ RSpec.configure do |config|
   config.define_derived_metadata do |metadata|
     metadata[:aggregate_failures] = true unless metadata.key?(:aggregate_failures)
   end
+
+  # Specify `require` files before run specs.
+  config.requires = Dir[File.join(__dir__, 'support/**/*.rb')]
 end
