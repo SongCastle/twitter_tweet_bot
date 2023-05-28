@@ -10,3 +10,6 @@ RSpec/MultipleExpectations:
 
 RSpec/ImplicitSubject:
   EnforcedStyle: require_implicit
+
+RSpec/ExampleLength:
+  Enabled: false
