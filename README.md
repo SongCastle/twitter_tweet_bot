@@ -94,7 +94,7 @@ TwitterTweetBot.post_tweet(token.access_token, 'Yeah!')
 #   @text="Yeah!">
 ```
 
-#### Ex. Restore an access token (required `'offline.access'` in scopes)
+#### Ex. Refresh an access token (required `'offline.access'` in scopes)
 
 ```rb
 TwitterTweetBot.refresh_token(token.refresh_token)
