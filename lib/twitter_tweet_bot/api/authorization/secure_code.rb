@@ -20,15 +20,14 @@ module TwitterTweetBot
           end
 
           def code_challenge(verifier, challenge_method = DEFAULT_CHALLENGE_METHOD)
-            hashed_verifier = \
-              case challenge_method
-              when 'S256'
-                digest_by_sha256(verifier)
-              else # 'plain'
-                verifier
-              end
-
-            encode(Base64.urlsafe_encode64(hashed_verifier, padding: false))
+            case challenge_method
+            when 'S256'
+              encode(
+                Base64.urlsafe_encode64(digest_by_sha256(verifier), padding: false)
+              )
+            else # 'plain'
+              encode(verifier)
+            end
           end
 
           private
