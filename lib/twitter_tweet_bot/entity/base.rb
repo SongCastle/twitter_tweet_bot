@@ -14,6 +14,10 @@ module TwitterTweetBot
 
           attr_reader(*fields)
         end
+
+        def build(json)
+          new(json)
+        end
       end
 
       def initialize(json)

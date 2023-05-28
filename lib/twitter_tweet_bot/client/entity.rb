@@ -27,7 +27,7 @@ module TwitterTweetBot
       private
 
       def with_entity(entity_klass, &block)
-        entity_klass.new(block.call)
+        entity_klass.build(block.call)
       end
 
       def parse_json(body)
