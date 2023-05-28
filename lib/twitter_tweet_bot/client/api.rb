@@ -3,8 +3,8 @@ require 'twitter_tweet_bot/api'
 module TwitterTweetBot
   class Client
     module API
-      def authorization(code_verifier = nil, code_challenge_method = nil, state = nil)
-        TwitterTweetBot::API::Authorization.authorization(
+      def authorize(code_verifier = nil, code_challenge_method = nil, state = nil)
+        TwitterTweetBot::API::Authorization.authorize(
           **params_with_config(
             code_verifier: code_verifier,
             code_challenge_method: code_challenge_method,

@@ -5,7 +5,7 @@ module TwitterTweetBot
     module ClientExt
       include Caching
 
-      def authorization(*)
+      def authorize(*)
         with_cache { super }
       end
 

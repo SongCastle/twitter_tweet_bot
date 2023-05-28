@@ -11,7 +11,7 @@ module TwitterTweetBot
       AUTH_URL = 'https://twitter.com/i/oauth2/authorize'.freeze
       RESPONSE_TYPE = 'code'.freeze
 
-      def self.authorization(
+      def self.authorize(
         client_id:,
         redirect_uri:,
         scopes:,
@@ -21,7 +21,7 @@ module TwitterTweetBot
         **
       )
         new(client_id, redirect_uri, scopes)
-          .authorization(code_verifier, code_challenge_method, state)
+          .authorize(code_verifier, code_challenge_method, state)
       end
 
       def initialize(client_id, redirect_uri, scopes)
@@ -30,7 +30,7 @@ module TwitterTweetBot
         @scopes = scopes
       end
 
-      def authorization(code_verifier, code_challenge_method, state)
+      def authorize(code_verifier, code_challenge_method, state)
         secure_code = Authorization::SecureCode.new(
           code_verifier: code_verifier,
           code_challenge_method: code_challenge_method,

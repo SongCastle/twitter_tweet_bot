@@ -19,7 +19,7 @@ module TwitterTweetBot
       Client.new(config || default_config!)
     end
 
-    delegate :authorization,
+    delegate :authorize,
              :fetch_token,
              :refresh_token,
              :post_tweet,

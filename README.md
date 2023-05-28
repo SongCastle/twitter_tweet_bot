@@ -51,7 +51,7 @@ end
 #### Step2. Issue an authorization url
 
 ```rb
-authorization = TwitterTweetBot.authorization
+authorization = TwitterTweetBot.authorize
 # =>
 #  #<TwitterTweetBot::Entity::Authorization
 #   @code_verifier="*****",
@@ -139,7 +139,7 @@ end
 
 ```rb
 # `code_verifier` and `state` will be cached.
-TwitterTweetBot.authorization
+TwitterTweetBot.authorize
 ```
 
 #### Step3. Fetch an access token
