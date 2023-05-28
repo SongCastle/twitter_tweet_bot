@@ -108,4 +108,8 @@ RSpec.configure do |config|
 
   # Specify `require` files before run specs.
   config.requires = Dir[File.join(__dir__, 'support/**/*.rb')]
+
+  # Specify `include` modules before run specs.
+  config.include(CustomMemoizedHelpers)
+  config.include(RequestHelpers)
 end
