@@ -52,9 +52,7 @@ module TwitterTweetBot
       end
 
       def headers
-        basic_authorization_header(
-          Base64.strict_encode64("#{client_id}:#{client_secret}")
-        )
+        basic_authorization_header(client_id, client_secret)
       end
 
       private_constant :API_ENDPOTNT,

@@ -9,8 +9,8 @@ module TwitterTweetBot
       module Post
         include Base
 
-        JSON_CONTENT_TYPE = 'application/json'.freeze
         URLENCODED_CONTENT_TYPE = 'application/x-www-form-urlencoded; charset=UTF-8'.freeze
+        JSON_CONTENT_TYPE = 'application/json'.freeze
 
         def request_post_form(url, body, headers = {})
           request_post(
