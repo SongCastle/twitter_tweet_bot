@@ -20,6 +20,24 @@ module Spec
               end
             end
 
+            describe '#initialize' do
+              subject { described_class.new(data) }
+
+              shared_examples 'initialize an entity' do
+                it 'initialize an entity' do
+                  is_expected.to be_a(described_class)
+                end
+              end
+
+              include_examples 'initialize an entity'
+
+              context 'when data is nil' do
+                let(:data) { nil }
+
+                include_examples 'initialize an entity'
+              end
+            end
+
             fields.each do |field|
               describe "##{field}" do
                 subject { described_class.new(data).public_send(field) }
