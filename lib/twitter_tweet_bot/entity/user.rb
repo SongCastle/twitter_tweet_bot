@@ -11,8 +11,8 @@ module TwitterTweetBot
         :username
       )
 
-      def initialize(data)
-        super Hash(data)[:data]
+      def self.build(json)
+        super(Hash(json)[:data])
       end
     end
   end
