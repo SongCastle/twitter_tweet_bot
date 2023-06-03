@@ -1,4 +1,5 @@
 require 'twitter_tweet_bot/api/http'
+require 'twitter_tweet_bot/api/users_me/params'
 
 module TwitterTweetBot
   module API
@@ -9,19 +10,23 @@ module TwitterTweetBot
 
       API_ENDPOTNT = 'https://api.twitter.com/2/users/me'.freeze
 
-      def self.fetch(access_token:, fields:, **)
-        new(access_token).fetch(fields)
+      # @param [String] access_token
+      # @param [Hash] params
+      # @option params [String|Array] :tweet_fields
+      # @option params [String|Array] :user_fields
+      def self.fetch(access_token:, params:, **)
+        new(access_token).fetch(params)
       end
 
       def initialize(access_token)
         @access_token = access_token
       end
 
-      def fetch(fields)
+      def fetch(params)
         request(
           :get,
           API_ENDPOTNT,
-          fields,
+          Params.build(params),
           bearer_authorization_header(access_token)
         )
       end
