@@ -7,28 +7,28 @@ module TwitterTweetBot
       extend ActiveSupport::Concern
 
       class_methods do
+        # @param [Array] fields
         def act_as_entity(*fields)
           class_attribute :fields,
                           instance_writer: false,
                           default: fields
 
-          attr_reader(*fields)
+          attr_reader :row
+
+          fields.each do |field|
+            define_method(field) { target_fields[field] }
+          end
+
+          # @param [Hash] hash
+          define_method(:initialize) { |hash| @row = Hash(hash) }
+
+          define_method(:target_fields) { row }
+          private :target_fields
         end
 
-        def build(json)
-          new(json)
-        end
-      end
-
-      def initialize(json)
-        initialize_fields!(Hash(json))
-      end
-
-      private
-
-      def initialize_fields!(hash)
-        fields.each do |field|
-          instance_variable_set(:"@#{field}", hash[field])
+        # @param [Hash] hash
+        def build(hash)
+          new(hash)
         end
       end
     end

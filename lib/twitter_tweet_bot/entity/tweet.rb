@@ -11,8 +11,10 @@ module TwitterTweetBot
         :edit_history_tweet_ids
       )
 
-      def self.build(json)
-        super(Hash(json)[:data])
+      private
+
+      def target_fields
+        Hash(row[:data])
       end
     end
   end

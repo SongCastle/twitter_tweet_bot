@@ -32,6 +32,14 @@ RSpec.describe TwitterTweetBot::Entity::Base do
     end
   end
 
+  describe '#row' do
+    subject { entity_klass.new(data).row }
+
+    it 'returns a row data' do
+      is_expected.to be(data)
+    end
+  end
+
   describe '#foo' do
     subject { entity_klass.new(data).foo }
 
