@@ -1,5 +1,7 @@
 RSpec.describe TwitterTweetBot::API::UsersMe.const_get(:Params) do # rubocop:disable RSpec/DescribeClass
   describe '::build' do
+    subject(:api_params) { described_class.build(params) }
+
     context 'when param\'s values are string' do
       let(:params) do
         {
@@ -10,18 +12,16 @@ RSpec.describe TwitterTweetBot::API::UsersMe.const_get(:Params) do # rubocop:dis
       end
 
       it 'returns params for UsersMe API' do
-        described_class.build(params).then do |actual|
-          expect(actual['expansions']).to eq('pinned_tweet_id')
-          expect(actual['tweet.fields']).to eq('attachments')
-          expect(actual['user.fields']).to eq('created_at')
-        end
+        expect(api_params['expansions']).to eq('pinned_tweet_id')
+        expect(api_params['tweet.fields']).to eq('attachments')
+        expect(api_params['user.fields']).to eq('created_at')
       end
 
       context 'when param\'s values are included an unknown key' do
         before { params[:unknown] = '*' }
 
         it 'trims an unknown key' do
-          expect(described_class.build(params)).not_to have_key(:unknown)
+          is_expected.not_to have_key(:unknown)
         end
       end
     end
@@ -36,11 +36,9 @@ RSpec.describe TwitterTweetBot::API::UsersMe.const_get(:Params) do # rubocop:dis
       end
 
       it 'returns params for UsersMe API' do
-        described_class.build(params).then do |actual|
-          expect(actual['expansions']).to eq('pinned_tweet_id')
-          expect(actual['tweet.fields']).to eq('attachments')
-          expect(actual['user.fields']).to eq('created_at,description')
-        end
+        expect(api_params['expansions']).to eq('pinned_tweet_id')
+        expect(api_params['tweet.fields']).to eq('attachments')
+        expect(api_params['user.fields']).to eq('created_at,description')
       end
     end
   end
