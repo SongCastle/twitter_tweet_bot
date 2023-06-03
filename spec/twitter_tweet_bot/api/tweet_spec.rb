@@ -12,7 +12,7 @@ RSpec.describe TwitterTweetBot::API::Tweet do
 
     before do
       stub_post('https://api.twitter.com/2/tweets')
-        .to_return_json(body: response_body)
+        .and_return_json(body: response_body)
     end
 
     it 'posts a tweet' do

@@ -13,7 +13,7 @@ RSpec.describe TwitterTweetBot::API::RefreshToken do
 
     before do
       stub_post('https://api.twitter.com/2/oauth2/token')
-        .to_return_json(body: response_body)
+        .and_return_json(body: response_body)
     end
 
     it 'refresh an access_token' do

@@ -14,7 +14,7 @@ RSpec.describe TwitterTweetBot::API::HTTP::Get do
 
     before do
       stub_get(uri_with_query)
-        .to_return_json(body: { piyo: :piyopiyo })
+        .and_return_json(body: { piyo: :piyopiyo })
     end
 
     context 'when headers are given' do

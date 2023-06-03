@@ -12,7 +12,7 @@ RSpec.describe TwitterTweetBot::API::UsersMe do
 
     before do
       stub_get('https://api.twitter.com/2/users/me')
-        .to_return_json(body: response_body)
+        .and_return_json(body: response_body)
     end
 
     it 'request current user\'s information' do
@@ -62,7 +62,7 @@ RSpec.describe TwitterTweetBot::API::UsersMe do
         reset_executed_requests!
 
         stub_get("https://api.twitter.com/2/users/me?#{query}")
-          .to_return_json(body: response_body)
+          .and_return_json(body: response_body)
       end
 
       it 'request current user\'s information with fields' do

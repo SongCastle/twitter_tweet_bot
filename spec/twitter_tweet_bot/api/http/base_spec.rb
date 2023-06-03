@@ -18,7 +18,7 @@ RSpec.describe TwitterTweetBot::API::HTTP::Base do
     let(:uri) { Faker::Internet.url }
     let(:response_body) { { foo: :bar } }
 
-    before { stub_get(uri).to_return_json(body: response_body) }
+    before { stub_get(uri).and_return_json(body: response_body) }
 
     it 'executes a request' do
       expect(http.code).to eq('200')

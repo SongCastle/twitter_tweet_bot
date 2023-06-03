@@ -22,7 +22,7 @@ RSpec.describe TwitterTweetBot::API::HTTP do
 
       before do
         stub_get(uri_with_query)
-          .to_return_json(body: { piyo: :piyopiyo })
+          .and_return_json(body: { piyo: :piyopiyo })
       end
 
       it 'executes a GET request' do
@@ -44,7 +44,7 @@ RSpec.describe TwitterTweetBot::API::HTTP do
 
       before do
         stub_post(uri)
-          .to_return_json(body: { piyo: :piyopiyo })
+          .and_return_json(body: { piyo: :piyopiyo })
       end
 
       it 'executes a POST (Form) request' do
@@ -72,7 +72,7 @@ RSpec.describe TwitterTweetBot::API::HTTP do
 
       before do
         stub_post(uri)
-          .to_return_json(body: { piyo: :piyopiyo })
+          .and_return_json(body: { piyo: :piyopiyo })
       end
 
       it 'executes a POST (JSON) request' do
@@ -103,7 +103,7 @@ RSpec.describe TwitterTweetBot::API::HTTP do
 
       before do
         stub_get(uri_with_query)
-          .to_return_json(status: 400, body: response_body)
+          .and_return_json(status: 400, body: response_body)
       end
 
       it 'raises `Error::RequestFaild`' do
