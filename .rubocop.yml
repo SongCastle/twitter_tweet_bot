@@ -4,6 +4,9 @@ require: rubocop-rspec
 AllCops:
   NewCops: enable
 
+RSpec/NestedGroups:
+  Max: 4
+
 # Since using `aggregate_failures` metadata.
 RSpec/MultipleExpectations:
   Enabled: false

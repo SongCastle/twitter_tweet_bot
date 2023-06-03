@@ -13,7 +13,7 @@ RSpec.describe TwitterTweetBot::API::HTTP::Post do
 
     before do
       stub_post(uri)
-        .to_return(body: { piyo: :piyopiyo }.to_json)
+        .and_return_json(body: { piyo: :piyopiyo })
     end
 
     context 'when headers are given' do
@@ -68,7 +68,7 @@ RSpec.describe TwitterTweetBot::API::HTTP::Post do
 
     before do
       stub_post(uri)
-        .to_return(body: { piyo: :piyopiyo }.to_json)
+        .and_return_json(body: { piyo: :piyopiyo })
     end
 
     context 'when headers are given' do

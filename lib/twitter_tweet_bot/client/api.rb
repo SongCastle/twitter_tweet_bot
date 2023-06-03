@@ -34,9 +34,9 @@ module TwitterTweetBot
         )
       end
 
-      def users_me(access_token, fields = {})
+      def users_me(access_token, params = {})
         TwitterTweetBot::API::UsersMe.fetch(
-          **params_with_config(access_token: access_token, fields: fields)
+          **params_with_config(access_token: access_token, params: params)
         )
       end
 

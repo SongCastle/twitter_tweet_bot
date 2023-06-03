@@ -16,12 +16,12 @@ module Spec
                 expect(entity).to be_a(described_class)
                 expect(
                   described_class
-                ).to have_received(:new).with(data).once
+                ).to have_received(:new).with(body).once
               end
             end
 
             describe '#initialize' do
-              subject { described_class.new(data) }
+              subject { described_class.new(body) }
 
               shared_examples 'initialize an entity' do
                 it 'initialize an entity' do
@@ -31,16 +31,24 @@ module Spec
 
               include_examples 'initialize an entity'
 
-              context 'when data is nil' do
-                let(:data) { nil }
+              context 'when body is nil' do
+                let(:body) { nil }
 
                 include_examples 'initialize an entity'
               end
             end
 
+            describe '#row' do
+              subject { described_class.new(body).row }
+
+              it 'returns a body' do
+                is_expected.to be(body)
+              end
+            end
+
             fields.each do |field|
               describe "##{field}" do
-                subject { described_class.new(data).public_send(field) }
+                subject { described_class.new(body).public_send(field) }
 
                 it "returns an attribute (##{field})" do
                   is_expected.to eq(data[field])

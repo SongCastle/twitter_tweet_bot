@@ -8,15 +8,15 @@ RSpec.describe TwitterTweetBot::API::Tweet do
         text: Faker::Lorem.word
       }
     end
-    let(:response_json) { { data: params.slice(:text) }.to_json }
+    let(:response_body) { { data: params.slice(:text) } }
 
     before do
       stub_post('https://api.twitter.com/2/tweets')
-        .to_return(body: response_json)
+        .and_return_json(body: response_body)
     end
 
     it 'posts a tweet' do
-      is_expected.to eq(response_json)
+      is_expected.to eq(response_body.to_json)
 
       expect(
         a_post('https://api.twitter.com/2/tweets')
