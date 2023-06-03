@@ -16,13 +16,13 @@ RSpec.describe TwitterTweetBot::API::HTTP::Base do
     end
 
     let(:uri) { Faker::Internet.url }
-    let(:body) { { foo: :bar }.to_json }
+    let(:response_body) { { foo: :bar } }
 
-    before { stub_get(uri).to_return(body: body) }
+    before { stub_get(uri).to_return_json(body: response_body) }
 
     it 'executes a request' do
       expect(http.code).to eq('200')
-      expect(http.body).to eq(body)
+      expect(http.body).to eq(response_body.to_json)
 
       expect(
         a_get(uri).with(headers: { 'X-Dummy' => 'dummy' })

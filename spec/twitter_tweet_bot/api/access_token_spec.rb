@@ -11,15 +11,15 @@ RSpec.describe TwitterTweetBot::API::AccessToken do
         code_verifier: Faker::Alphanumeric.alpha(number: 5)
       }
     end
-    let(:response_json) { { access_token: '*' * 5 }.to_json }
+    let(:response_body) { { access_token: '*' * 5 } }
 
     before do
       stub_post('https://api.twitter.com/2/oauth2/token')
-        .to_return(body: response_json)
+        .to_return_json(body: response_body)
     end
 
     it 'fetches an access_token' do
-      is_expected.to eq(response_json)
+      is_expected.to eq(response_body.to_json)
 
       expect(
         a_post('https://api.twitter.com/2/oauth2/token')

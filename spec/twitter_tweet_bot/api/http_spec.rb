@@ -22,7 +22,7 @@ RSpec.describe TwitterTweetBot::API::HTTP do
 
       before do
         stub_get(uri_with_query)
-          .to_return(body: { piyo: :piyopiyo }.to_json)
+          .to_return_json(body: { piyo: :piyopiyo })
       end
 
       it 'executes a GET request' do
@@ -44,7 +44,7 @@ RSpec.describe TwitterTweetBot::API::HTTP do
 
       before do
         stub_post(uri)
-          .to_return(body: { piyo: :piyopiyo }.to_json)
+          .to_return_json(body: { piyo: :piyopiyo })
       end
 
       it 'executes a POST (Form) request' do
@@ -72,7 +72,7 @@ RSpec.describe TwitterTweetBot::API::HTTP do
 
       before do
         stub_post(uri)
-          .to_return(body: { piyo: :piyopiyo }.to_json)
+          .to_return_json(body: { piyo: :piyopiyo })
       end
 
       it 'executes a POST (JSON) request' do
@@ -99,17 +99,17 @@ RSpec.describe TwitterTweetBot::API::HTTP do
       end
 
       let(:uri_with_query) { "#{uri}?#{URI.encode_www_form(body)}" }
-      let(:response_json) { { error: 'invalid_request' }.to_json }
+      let(:response_body) { { error: 'invalid_request' } }
 
       before do
         stub_get(uri_with_query)
-          .to_return(status: 400, body: response_json)
+          .to_return_json(status: 400, body: response_body)
       end
 
       it 'raises `Error::RequestFaild`' do
         is_expect_caused.to(
           raise_error(described_class::Error::RequestFaild) do |error|
-            expect(error.message).to eq("400\n#{response_json}")
+            expect(error.message).to eq("400\n#{response_body.to_json}")
           end
         )
 

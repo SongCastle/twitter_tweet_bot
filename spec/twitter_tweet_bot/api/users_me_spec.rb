@@ -8,15 +8,15 @@ RSpec.describe TwitterTweetBot::API::UsersMe do
         params: {}
       }
     end
-    let(:response) { { data: { name: Faker::Internet.username } } }
+    let(:response_body) { { data: { name: Faker::Internet.username } } }
 
     before do
       stub_get('https://api.twitter.com/2/users/me')
-        .to_return_json(body: response)
+        .to_return_json(body: response_body)
     end
 
     it 'request current user\'s information' do
-      is_expected.to eq(response.to_json)
+      is_expected.to eq(response_body.to_json)
 
       expect(
         a_get('https://api.twitter.com/2/users/me')
@@ -49,7 +49,7 @@ RSpec.describe TwitterTweetBot::API::UsersMe do
           }
         )
       end
-      let(:response) do
+      let(:response_body) do
         {
           data: {
             name: Faker::Internet.username,
@@ -62,11 +62,11 @@ RSpec.describe TwitterTweetBot::API::UsersMe do
         reset_executed_requests!
 
         stub_get("https://api.twitter.com/2/users/me?#{query}")
-          .to_return_json(body: response)
+          .to_return_json(body: response_body)
       end
 
       it 'request current user\'s information with fields' do
-        is_expected.to eq(response.to_json)
+        is_expected.to eq(response_body.to_json)
 
         expect(
           a_get("https://api.twitter.com/2/users/me?#{query}")
