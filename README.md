@@ -51,7 +51,7 @@ end
 #### Step2. Issue an authorization url
 
 ```rb
-authorization = TwitterTweetBot.authorization
+authorization = TwitterTweetBot.authorize
 # =>
 #  #<TwitterTweetBot::Entity::Authorization
 #   @code_verifier="*****",
@@ -59,7 +59,7 @@ authorization = TwitterTweetBot.authorization
 #   @url="https://twitter.com/i/oauth2/authorize?response_type=code&redirect_uri=<YOUR_REDIRECT_URI>&client_id=<YOUR_CLIENT_ID>&scope=<SCOPES>&code_challenge=*****&code_challenge_method=S256&state=***">
 ```
 
-#### Step3. Rerirect (or Go) to `authorization.url`
+#### Step3. Redirect (or Go) to `authorization.url`
 
 And smash `"Authorize app"`.
 
@@ -94,7 +94,7 @@ TwitterTweetBot.post_tweet(token.access_token, 'Yeah!')
 #   @text="Yeah!">
 ```
 
-#### Ex. Restore an access token (required `'offline.access'` in scopes)
+#### Ex. Refresh an access token (required `'offline.access'` in scopes)
 
 ```rb
 TwitterTweetBot.refresh_token(token.refresh_token)
@@ -139,7 +139,7 @@ end
 
 ```rb
 # `code_verifier` and `state` will be cached.
-TwitterTweetBot.authorization
+TwitterTweetBot.authorize
 ```
 
 #### Step3. Fetch an access token

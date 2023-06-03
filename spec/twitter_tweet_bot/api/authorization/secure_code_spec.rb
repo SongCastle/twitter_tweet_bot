@@ -93,11 +93,9 @@ RSpec.describe TwitterTweetBot::API::Authorization::SecureCode do
 
       let(:code_verifier) { Faker::Alphanumeric.alpha(number: 5) }
 
-      it 'returns an encoded string by base64' do
+      it 'returns a same string as given' do
         expect(code_challenge).to be_a(String)
-        expect(code_challenge).to eq(
-          Base64.urlsafe_encode64(code_verifier, padding: false)
-        )
+        expect(code_challenge).to eq(code_verifier)
         expect(code_challenge.encoding).to eq(Encoding::UTF_8)
       end
     end

@@ -4,7 +4,7 @@ require 'twitter_tweet_bot/entity'
 module TwitterTweetBot
   class Client
     module Entity
-      def authorization(*)
+      def authorize(*)
         with_entity(TwitterTweetBot::Entity::Authorization) { super }
       end
 
