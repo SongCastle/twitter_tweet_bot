@@ -1,5 +1,5 @@
 module TwitterTweetBot
-  class Configration
+  class Configuration
     attr_accessor :name,
                   :client_id,
                   :client_secret,
