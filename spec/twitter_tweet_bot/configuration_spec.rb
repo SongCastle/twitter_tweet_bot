@@ -4,16 +4,20 @@ RSpec.describe TwitterTweetBot::Configuration do
       subject(:config) { described_class.new }
 
       it 'initializes a configuration as default' do
-        expect(config.name).to be_nil
-        expect(config.client_id).to be_nil
-        expect(config.client_secret).to be_nil
-        expect(config.redirect_uri).to be_nil
-        expect(config.scopes).to eq([])
+        is_expected.to be_client_config(
+          {
+            name: nil,
+            client_id: nil,
+            client_secret: nil,
+            redirect_uri: nil,
+            scopes: []
+          }
+        )
       end
     end
 
     context 'with arguments' do
-      subject(:config) { described_class.new(**params) }
+      subject { described_class.new(**params) }
 
       let(:params) do
         {
@@ -26,16 +30,12 @@ RSpec.describe TwitterTweetBot::Configuration do
       end
 
       it 'sets a configuration from arguments' do
-        expect(config.name).to eq(params[:name])
-        expect(config.client_id).to eq(params[:client_id])
-        expect(config.client_secret).to eq(params[:client_secret])
-        expect(config.redirect_uri).to eq(params[:redirect_uri])
-        expect(config.scopes).to eq(params[:scopes])
+        is_expected.to be_client_config(params)
       end
     end
 
     context 'with a block' do
-      subject(:config) do
+      subject do
         described_class.new do |c|
           c.name = params[:name]
           c.client_id = params[:client_id]
@@ -56,11 +56,7 @@ RSpec.describe TwitterTweetBot::Configuration do
       end
 
       it 'sets a configuration with a block' do
-        expect(config.name).to eq(params[:name])
-        expect(config.client_id).to eq(params[:client_id])
-        expect(config.client_secret).to eq(params[:client_secret])
-        expect(config.redirect_uri).to eq(params[:redirect_uri])
-        expect(config.scopes).to eq(params[:scopes])
+        is_expected.to be_client_config(params)
       end
     end
   end
