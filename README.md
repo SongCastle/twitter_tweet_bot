@@ -44,7 +44,7 @@ TwitterTweetBot.configure do |config|
   # Redirect URL After Authorization
   config.redirect_uri = 'https://example.com/twitter/callback'
   # Twitter's App Scopes with OAuth 2.0
-  config.scopes = ['tweet.read', 'tweet.write', 'users.read', 'offline.access']
+  config.scopes = %w[tweet.read tweet.write users.read offline.access]
 end
 ```
 
