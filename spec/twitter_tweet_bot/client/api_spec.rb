@@ -231,7 +231,7 @@ RSpec.describe TwitterTweetBot::Client::API do
 
         expect(TwitterTweetBot::API::UsersMe).to(
           have_received(:fetch)
-            .with(**config, access_token: access_token, params: {})
+            .with(**config, access_token: access_token)
             .once
         )
       end
@@ -239,25 +239,22 @@ RSpec.describe TwitterTweetBot::Client::API do
 
     context 'with arguments' do
       subject do
-        api_klass.new(config).users_me(
-          params[:access_token], params[:params]
-        )
+        api_klass.new(config).users_me(access_token) do |params|
+          params.user_fields = 'created_at'
+        end
       end
 
-      let(:params) do
-        {
-          access_token: Faker::Alphanumeric.alpha(number: 5),
-          params: { user_fields: 'created_at' }
-        }
-      end
+      let(:access_token) { Faker::Alphanumeric.alpha(number: 5) }
 
       it 'calls `API::UsersMe#fetch`' do
         is_expected.to eq(response_json)
 
         expect(TwitterTweetBot::API::UsersMe).to(
-          have_received(:fetch)
-            .with(**config, **params)
-            .once
+          have_received(:fetch) do |_, &block|
+            expect(
+              Struct.new(:user_fields).new.tap(&block).to_h
+            ).to eq({ user_fields: 'created_at' })
+          end.with(**config, access_token: access_token).once
         )
       end
     end
