@@ -6,7 +6,7 @@ require 'twitter_tweet_bot/cache/entity_ext'
 
 module TwitterTweetBot
   Client.prepend(Cache::ClientExt)
-  Configration.prepend(Cache::ConfigrationExt)
+  Configuration.prepend(Cache::ConfigurationExt)
 
   Entity::Authorization.include(Cache::EntityExt::Authorization)
   Entity::Token.include(Cache::EntityExt::Token)

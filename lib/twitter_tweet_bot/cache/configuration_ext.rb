@@ -2,7 +2,7 @@ require 'twitter_tweet_bot/cache/store'
 
 module TwitterTweetBot
   module Cache
-    module ConfigrationExt
+    module ConfigurationExt
       attr_accessor :cache_provider
       attr_writer :cache
 
