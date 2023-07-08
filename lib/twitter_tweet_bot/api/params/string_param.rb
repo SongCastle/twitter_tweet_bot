@@ -1,9 +1,9 @@
 module TwitterTweetBot
   module API
     module Params
-      module PlainParam
+      module StringParam
         def self.build(key, value)
-          { key => value }
+          { key => value.to_s }
         end
       end
     end

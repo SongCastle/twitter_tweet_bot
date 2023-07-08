@@ -1,4 +1,4 @@
-RSpec.describe TwitterTweetBot::API::Params::PlainParam do
+RSpec.describe TwitterTweetBot::API::Params::StringParam do
   describe '::build' do
     subject { described_class.build('foo', 'bar') }
 
