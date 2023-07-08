@@ -38,8 +38,8 @@ module Spec
               end
             end
 
-            describe '#row' do
-              subject { described_class.new(body).row }
+            describe '#raw' do
+              subject { described_class.new(body).raw }
 
               it 'returns a body' do
                 is_expected.to be(body)

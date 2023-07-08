@@ -14,7 +14,7 @@ module TwitterTweetBot
       private
 
       def target_fields
-        Hash(row[:data])
+        Hash(raw[:data])
       end
     end
   end
