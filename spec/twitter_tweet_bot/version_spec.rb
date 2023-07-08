@@ -4,7 +4,7 @@ RSpec.describe TwitterTweetBot::Version do
 
     it 'returns a current version' do
       expect(current).to be_a(Gem::Version)
-      expect(current.version).to eq('1.1.0')
+      expect(current.version).to eq('1.2.0')
     end
   end
 end
