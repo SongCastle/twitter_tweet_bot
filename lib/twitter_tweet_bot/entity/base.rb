@@ -13,16 +13,16 @@ module TwitterTweetBot
                           instance_writer: false,
                           default: fields
 
-          attr_reader :row
+          attr_reader :raw
 
           fields.each do |field|
             define_method(field) { target_fields[field] }
           end
 
           # @param [Hash] hash
-          define_method(:initialize) { |hash| @row = Hash(hash) }
+          define_method(:initialize) { |hash| @raw = Hash(hash) }
 
-          define_method(:target_fields) { row }
+          define_method(:target_fields) { raw }
           private :target_fields
         end
 

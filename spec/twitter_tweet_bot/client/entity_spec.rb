@@ -26,7 +26,7 @@ RSpec.describe TwitterTweetBot::Client::Entity do
 
     it 'wrap response as `Entity::Authorization`' do
       expect(authorization).to be_a(TwitterTweetBot::Entity::Authorization)
-      expect(authorization.row).to be(response_body)
+      expect(authorization.raw).to be(response_body)
       expect(authorization.url).to eq(response_body[:url])
       expect(authorization.code_verifier).to eq(response_body[:code_verifier])
       expect(authorization.state).to eq(response_body[:state])
@@ -54,7 +54,7 @@ RSpec.describe TwitterTweetBot::Client::Entity do
 
     it 'wrap response as `Entity::Token`' do
       expect(access_token).to be_a(TwitterTweetBot::Entity::Token)
-      expect(access_token.row).to eq(response_body)
+      expect(access_token.raw).to eq(response_body)
       expect(access_token.token_type).to eq(response_body[:token_type])
       expect(access_token.expires_in).to eq(response_body[:expires_in])
       expect(access_token.scope).to eq(response_body[:scope])
@@ -84,7 +84,7 @@ RSpec.describe TwitterTweetBot::Client::Entity do
 
     it 'wrap response as `Entity::Token`' do
       expect(refresh_token).to be_a(TwitterTweetBot::Entity::Token)
-      expect(refresh_token.row).to eq(response_body)
+      expect(refresh_token.raw).to eq(response_body)
       expect(refresh_token.token_type).to eq(response_body[:token_type])
       expect(refresh_token.expires_in).to eq(response_body[:expires_in])
       expect(refresh_token.scope).to eq(response_body[:scope])
@@ -114,7 +114,7 @@ RSpec.describe TwitterTweetBot::Client::Entity do
 
     it 'wrap response as `Entity::Tweet`' do
       expect(tweet).to be_a(TwitterTweetBot::Entity::Tweet)
-      expect(tweet.row).to eq(response_body)
+      expect(tweet.raw).to eq(response_body)
       expect(tweet.id).to eq(response_body[:data][:id])
       expect(tweet.edit_history_tweet_ids).to eq(response_body[:data][:edit_history_tweet_ids])
       expect(tweet.text).to eq(response_body[:data][:text])
@@ -142,7 +142,7 @@ RSpec.describe TwitterTweetBot::Client::Entity do
 
     it 'wrap response as `Entity::User`' do
       expect(users_me).to be_a(TwitterTweetBot::Entity::User)
-      expect(users_me.row).to eq(response_body)
+      expect(users_me.raw).to eq(response_body)
       expect(users_me.id).to eq(response_body[:data][:id])
       expect(users_me.name).to eq(response_body[:data][:name])
       expect(users_me.username).to eq(response_body[:data][:username])
