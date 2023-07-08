@@ -1,5 +1,3 @@
-require 'twitter_tweet_bot/api/params/string_param'
-
 RSpec.describe TwitterTweetBot::API::Params::StringParam do
   describe '::build' do
     subject { described_class.build('foo', value) }

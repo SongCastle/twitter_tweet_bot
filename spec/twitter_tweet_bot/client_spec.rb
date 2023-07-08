@@ -168,24 +168,13 @@ RSpec.describe TwitterTweetBot::Client do
   end
 
   describe '#post_tweet' do
-    subject(:tweet) do
-      described_class.new(config).post_tweet(
-        params[:access_token], params[:text]
-      )
-    end
-
-    let(:params) do
-      {
-        access_token: Faker::Alphanumeric.alpha(number: 5),
-        text: Faker::Lorem.word
-      }
-    end
+    let(:access_token) { Faker::Alphanumeric.alpha(number: 5) }
     let(:response_body) do
       {
         data: {
           id: Faker::Internet.uuid,
           edit_history_tweet_ids: [Faker::Internet.uuid],
-          text: params[:text]
+          text: request_body[:text]
         }
       }
     end
@@ -197,18 +186,68 @@ RSpec.describe TwitterTweetBot::Client do
       )
     end
 
-    it 'requests `API::Tweet`' do
-      expect(tweet).to be_a(TwitterTweetBot::Entity::Tweet)
-      expect(tweet.raw).to eq(response_body)
-      expect(tweet.id).to eq(response_body[:data][:id])
-      expect(tweet.edit_history_tweet_ids).to eq(response_body[:data][:edit_history_tweet_ids])
-      expect(tweet.text).to eq(response_body[:data][:text])
+    context 'without block' do
+      subject(:tweet) do
+        described_class.new(config).post_tweet(
+          access_token, request_body[:text]
+        )
+      end
 
-      expect(TwitterTweetBot::API::Tweet).to(
-        have_received(:post)
-          .with(**config, **params)
-          .once
-      )
+      let(:request_body) do
+        { text: Faker::Lorem.word }
+      end
+
+      it 'requests `API::Tweet`' do
+        expect(tweet).to be_a(TwitterTweetBot::Entity::Tweet)
+        expect(tweet.raw).to eq(response_body)
+        expect(tweet.id).to eq(response_body[:data][:id])
+        expect(tweet.edit_history_tweet_ids).to eq(response_body[:data][:edit_history_tweet_ids])
+        expect(tweet.text).to eq(response_body[:data][:text])
+
+        expect(TwitterTweetBot::API::Tweet).to(
+          have_received(:post)
+            .with(**config, access_token: access_token, text: request_body[:text])
+            .once
+        )
+      end
+    end
+
+    context 'with block' do
+      subject(:tweet) do
+        described_class.new(config).post_tweet(
+          access_token, request_body[:text]
+        ) do |params|
+          params.reply_settings = request_body[:reply_settings]
+          params.reply = request_body[:reply]
+        end
+      end
+
+      let(:request_body) do
+        {
+          text: Faker::Lorem.word,
+          reply_settings: %w[mentionedUsers following].sample,
+          reply: {
+            in_reply_to_tweet_id: Faker::Internet.uuid,
+            exclude_reply_user_ids: [Faker::Internet.uuid]
+          }
+        }
+      end
+
+      it 'requests `API::Tweet`' do
+        expect(tweet).to be_a(TwitterTweetBot::Entity::Tweet)
+        expect(tweet.raw).to eq(response_body)
+        expect(tweet.id).to eq(response_body[:data][:id])
+        expect(tweet.edit_history_tweet_ids).to eq(response_body[:data][:edit_history_tweet_ids])
+        expect(tweet.text).to eq(response_body[:data][:text])
+
+        expect(TwitterTweetBot::API::Tweet).to(
+          have_received(:post) do |_, &block|
+            expect(
+              Struct.new(:reply_settings, :reply).new.tap(&block).to_h
+            ).to eq(request_body.except(:text))
+          end.with(**config, access_token: access_token, text: request_body[:text]).once
+        )
+      end
     end
   end
 
@@ -230,7 +269,7 @@ RSpec.describe TwitterTweetBot::Client do
       )
     end
 
-    context 'without arguments' do
+    context 'without block' do
       subject(:users_me) do
         described_class.new(config).users_me(access_token)
       end
@@ -252,7 +291,7 @@ RSpec.describe TwitterTweetBot::Client do
       end
     end
 
-    context 'with arguments' do
+    context 'with block' do
       subject(:users_me) do
         described_class.new(config).users_me(access_token) do |params|
           params.tweet_fields = 'attachments'

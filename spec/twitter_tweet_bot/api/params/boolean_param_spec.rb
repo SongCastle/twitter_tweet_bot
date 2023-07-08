@@ -1,5 +1,3 @@
-require 'twitter_tweet_bot/api/params/boolean_param'
-
 RSpec.describe TwitterTweetBot::API::Params::BooleanParam do
   describe '::build' do
     subject { described_class.build('foo', value) }

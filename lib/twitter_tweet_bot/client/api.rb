@@ -28,9 +28,9 @@ module TwitterTweetBot
         )
       end
 
-      def post_tweet(access_token, text)
+      def post_tweet(access_token, text, &block)
         TwitterTweetBot::API::Tweet.post(
-          **params_with_config(access_token: access_token, text: text)
+          **params_with_config(access_token: access_token, text: text), &block
         )
       end
 
