@@ -1,5 +1,5 @@
 require 'twitter_tweet_bot/api/params/comma_separated_param'
-require 'twitter_tweet_bot/api/params/plain_param'
+require 'twitter_tweet_bot/api/params/string_param'
 
 module TwitterTweetBot
   module API
@@ -25,7 +25,7 @@ module TwitterTweetBot
         alias build params
 
         def expansions=(value)
-          params.merge!(PlainParam.build('expansions', value))
+          params.merge!(StringParam.build('expansions', value))
         end
 
         def tweet_fields=(value)

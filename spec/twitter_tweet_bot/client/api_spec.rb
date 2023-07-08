@@ -161,24 +161,13 @@ RSpec.describe TwitterTweetBot::Client::API do
   end
 
   describe '#post_tweet' do
-    subject do
-      api_klass.new(config).post_tweet(
-        params[:access_token], params[:text]
-      )
-    end
-
-    let(:params) do
-      {
-        access_token: Faker::Alphanumeric.alpha(number: 5),
-        text: Faker::Lorem.word
-      }
-    end
+    let(:access_token) { Faker::Alphanumeric.alpha(number: 5) }
     let(:response_json) do
       {
         data: {
           id: Faker::Internet.uuid,
           edit_history_tweet_ids: [Faker::Internet.uuid],
-          text: params[:text]
+          text: request_body[:text]
         }
       }.to_json
     end
@@ -190,14 +179,61 @@ RSpec.describe TwitterTweetBot::Client::API do
       )
     end
 
-    it 'calls `API::Tweet#post`' do
-      is_expected.to eq(response_json)
+    context 'without block' do
+      subject do
+        api_klass.new(config).post_tweet(
+          access_token, request_body[:text]
+        )
+      end
 
-      expect(TwitterTweetBot::API::Tweet).to(
-        have_received(:post)
-          .with(**config, **params)
-          .once
-      )
+      let(:request_body) do
+        { text: Faker::Lorem.word }
+      end
+
+      it 'calls `API::Tweet#post`' do
+        is_expected.to eq(response_json)
+
+        expect(TwitterTweetBot::API::Tweet).to(
+          have_received(:post)
+            .with(
+              **config,
+              access_token: access_token,
+              text: request_body[:text]
+            )
+            .once
+        )
+      end
+    end
+
+    context 'with block' do
+      subject do
+        api_klass.new(config).post_tweet(access_token, nil) do |params|
+          params.for_super_followers_only = request_body[:for_super_followers_only]
+          params.media = request_body[:media]
+        end
+      end
+
+      let(:request_body) do
+        {
+          for_super_followers_only: Faker::Boolean.boolean,
+          media: {
+            media_ids: [Faker::Internet.uuid],
+            tagged_user_ids: [Faker::Internet.uuid]
+          }
+        }
+      end
+
+      it 'calls `API::Tweet#post`' do
+        is_expected.to eq(response_json)
+
+        expect(TwitterTweetBot::API::Tweet).to(
+          have_received(:post) do |_, &block|
+            expect(
+              Struct.new(:for_super_followers_only, :media).new.tap(&block).to_h
+            ).to eq(request_body)
+          end.with(**config, access_token: access_token, text: nil).once
+        )
+      end
     end
   end
 
@@ -219,7 +255,7 @@ RSpec.describe TwitterTweetBot::Client::API do
       )
     end
 
-    context 'without arguments' do
+    context 'without block' do
       subject do
         api_klass.new(config).users_me(access_token)
       end
@@ -237,7 +273,7 @@ RSpec.describe TwitterTweetBot::Client::API do
       end
     end
 
-    context 'with arguments' do
+    context 'with block' do
       subject do
         api_klass.new(config).users_me(access_token) do |params|
           params.user_fields = 'created_at'

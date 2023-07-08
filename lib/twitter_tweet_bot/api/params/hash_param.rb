@@ -1,8 +1,10 @@
 module TwitterTweetBot
   module API
     module Params
-      module PlainParam
+      module HashParam
         def self.build(key, value)
+          return {} unless value.is_a?(Hash)
+
           { key => value }
         end
       end

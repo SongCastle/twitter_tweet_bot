@@ -94,6 +94,14 @@ TwitterTweetBot.post_tweet(token.access_token, 'Yeah!')
 #   @text="Yeah!">
 ```
 
+##### With [some params](https://developer.twitter.com/en/docs/twitter-api/tweets/manage-tweets/api-reference/post-tweets)
+
+```rb
+TwitterTweetBot.post_tweet(token.access_token, 'Yeah! Yeah!') do |params|
+  params.reply = { in_reply_to_tweet_id: '*******************' }
+end
+```
+
 #### Ex. Refresh an access token (required `'offline.access'` in scopes)
 
 ```rb
