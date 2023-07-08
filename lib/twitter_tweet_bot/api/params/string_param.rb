@@ -3,7 +3,9 @@ module TwitterTweetBot
     module Params
       module StringParam
         def self.build(key, value)
-          { key => value.to_s }
+          return {} unless value.is_a?(String)
+
+          { key => value }
         end
       end
     end
