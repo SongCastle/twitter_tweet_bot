@@ -1,7 +1,7 @@
 module TwitterTweetBot
   module Version
     def self.current
-      Gem::Version.new('1.1.0')
+      Gem::Version.new('1.2.0')
     end
   end
 end
