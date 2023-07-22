@@ -14,7 +14,7 @@ module TwitterTweetBot
       # @param [String] text
       # @yield [params]
       # @yieldparam params [TwitterTweetBot::API::Params::TweetParams]
-      def self.post(access_token:, text:, **, &block)
+      def self.post(access_token:, text:, &block)
         new(access_token).post(
           Params::TweetParams.build do |params|
             params.text = text

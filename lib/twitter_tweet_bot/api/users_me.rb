@@ -13,7 +13,7 @@ module TwitterTweetBot
       # @param [String] access_token
       # @yield [params]
       # @yieldparam params [TwitterTweetBot::API::Params::UsersMeParams]
-      def self.fetch(access_token:, **, &block)
+      def self.fetch(access_token:, &block)
         new(access_token).fetch(
           Params::UsersMeParams.build(&block)
         )
