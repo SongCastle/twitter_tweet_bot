@@ -64,15 +64,11 @@ RSpec.describe TwitterTweetBot::API::Authorization do
 
       before do
         allow(TwitterTweetBot::API::Authorization::SecureCode).to(
-          receive(:code_verifier).and_return('*' * 3)
-        )
-
-        allow(TwitterTweetBot::API::Authorization::SecureCode).to(
-          receive(:state).and_return('*' * 4)
-        )
-
-        allow(TwitterTweetBot::API::Authorization::SecureCode).to(
-          receive(:code_challenge).and_return('*' * 5)
+          receive_messages(
+            code_verifier: '*' * 3,
+            state: '*' * 4,
+            code_challenge: '*' * 5
+          )
         )
       end
 

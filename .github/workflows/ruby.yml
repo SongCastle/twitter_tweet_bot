@@ -1,0 +1,145 @@
+name: Ruby
+
+on: pull_request
+
+permissions:
+  pull-requests: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+
+      - name: Make a directory
+        run: mkdir ./outputs
+
+      - name: Run Lint
+        run: |
+          bundle exec rubocop -o ./outputs/Lint || status=$(echo $?)
+          cd outputs
+          [[ $status -eq 0 ]] && filename="Lint(Pass)" || filename="Lint(Failed)"
+          mv Lint "$filename"
+          exit $status
+        working-directory: ${{ github.workspace }}
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: outputs
+          path: ${{ github.workspace }}/outputs
+
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      fail-fast: true
+      max-parallel: 1
+      matrix:
+        ruby-version:
+          - '3.0'
+          - '3.1'
+          - '3.2'
+    needs: lint
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+          bundler-cache: true
+
+      - name: Make a directory
+        run: mkdir ./outputs
+
+      - name: Run tests
+        run: |
+          bundle exec rspec spec --no-color --failure-exit-code 1 -o "./outputs/${{ matrix.ruby-version }}" || status=$(echo $?)
+          cd outputs
+          [[ $status -eq 0 ]] && filename="${{ matrix.ruby-version }}(Pass)" || filename="${{ matrix.ruby-version }}(Failed)"
+          mv "${{ matrix.ruby-version }}" "$filename"
+          exit $status
+        working-directory: ${{ github.workspace }}
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: outputs
+          path: ${{ github.workspace }}/outputs
+
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: always()
+    needs:
+      - lint
+      - test
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        id: download
+        with:
+          path: ${{ github.workspace }}
+
+      - name: Genegrate template.sh
+        run: |
+          cat <<- EOS > template.sh
+          content="\$(cat \$1)"
+
+          cat <<- TEMPLATE
+          <details>
+          <summary>\$1</summary>
+
+          \\\`\\\`\\\`
+          \$content
+          \\\`\\\`\\\`
+          </details>
+          TEMPLATE
+          EOS
+          chmod +x ./template.sh
+        working-directory: ${{ github.workspace }}
+
+      - name: Build reports
+        id: reports
+        run: |
+          ls .
+          ls -F . | grep -v / | xargs -I ARG sh -c '../template.sh "ARG" >> ../result.txt'
+        working-directory: ${{ github.workspace }}/outputs
+
+      - name: Comment on Pull Request
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs')
+            if (context.issue.number) {
+              try {
+                const body = fs.readFileSync("${{ github.workspace }}/result.txt", 'utf8').trim()
+                await github.rest.issues.createComment({
+                  issue_number: context.issue.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: body
+                })
+              } catch (err) {
+                console.error('Error', err)
+              }
+            } else {
+              console.log('Skipped')
+            }
