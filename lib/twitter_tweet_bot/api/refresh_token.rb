@@ -10,7 +10,7 @@ module TwitterTweetBot
       API_ENDPOTNT = 'https://api.twitter.com/2/oauth2/token'.freeze
       GRANT_TYPE = 'refresh_token'.freeze
 
-      def self.fetch(client_id:, client_secret:, refresh_token:, **)
+      def self.fetch(client_id:, client_secret:, refresh_token:)
         new(client_id, client_secret)
           .fetch(refresh_token)
       end

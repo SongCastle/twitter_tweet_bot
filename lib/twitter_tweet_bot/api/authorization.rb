@@ -17,8 +17,7 @@ module TwitterTweetBot
         scopes:,
         code_verifier:,
         code_challenge_method:,
-        state:,
-        **
+        state:
       )
         new(client_id, redirect_uri, scopes)
           .authorize(code_verifier, code_challenge_method, state)

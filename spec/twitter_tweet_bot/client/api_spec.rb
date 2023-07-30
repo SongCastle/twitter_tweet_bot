@@ -47,7 +47,7 @@ RSpec.describe TwitterTweetBot::Client::API do
         expect(TwitterTweetBot::API::Authorization).to(
           have_received(:authorize)
             .with(
-              **config,
+              **config.slice(:client_id, :redirect_uri, :scopes),
               code_verifier: nil,
               code_challenge_method: nil,
               state: nil
@@ -72,7 +72,7 @@ RSpec.describe TwitterTweetBot::Client::API do
         expect(TwitterTweetBot::API::Authorization).to(
           have_received(:authorize)
             .with(
-              **config,
+              **config.slice(:client_id, :redirect_uri, :scopes),
               code_verifier: data[:code_verifier],
               code_challenge_method: 'S256',
               state: data[:state]
@@ -118,7 +118,10 @@ RSpec.describe TwitterTweetBot::Client::API do
 
       expect(TwitterTweetBot::API::AccessToken).to(
         have_received(:fetch)
-          .with(**config, **params)
+          .with(
+            **config.slice(:client_id, :client_secret, :redirect_uri),
+            **params
+          )
           .once
       )
     end
@@ -154,7 +157,10 @@ RSpec.describe TwitterTweetBot::Client::API do
 
       expect(TwitterTweetBot::API::RefreshToken).to(
         have_received(:fetch)
-          .with(**config, refresh_token: refresh_token)
+          .with(
+            **config.slice(:client_id, :client_secret),
+            refresh_token: refresh_token
+          )
           .once
       )
     end
@@ -196,7 +202,6 @@ RSpec.describe TwitterTweetBot::Client::API do
         expect(TwitterTweetBot::API::Tweet).to(
           have_received(:post)
             .with(
-              **config,
               access_token: access_token,
               text: request_body[:text]
             )
@@ -231,7 +236,7 @@ RSpec.describe TwitterTweetBot::Client::API do
             expect(
               Struct.new(:for_super_followers_only, :media).new.tap(&block).to_h
             ).to eq(request_body)
-          end.with(**config, access_token: access_token, text: nil).once
+          end.with(access_token: access_token, text: nil).once
         )
       end
     end
@@ -267,7 +272,7 @@ RSpec.describe TwitterTweetBot::Client::API do
 
         expect(TwitterTweetBot::API::UsersMe).to(
           have_received(:fetch)
-            .with(**config, access_token: access_token)
+            .with(access_token: access_token)
             .once
         )
       end
@@ -290,7 +295,7 @@ RSpec.describe TwitterTweetBot::Client::API do
             expect(
               Struct.new(:user_fields).new.tap(&block).to_h
             ).to eq({ user_fields: 'created_at' })
-          end.with(**config, access_token: access_token).once
+          end.with(access_token: access_token).once
         )
       end
     end

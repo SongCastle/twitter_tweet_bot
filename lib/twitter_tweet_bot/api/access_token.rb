@@ -16,8 +16,7 @@ module TwitterTweetBot
         client_secret:,
         redirect_uri:,
         code:,
-        code_verifier:,
-        **
+        code_verifier:
       )
         new(client_id, client_secret, redirect_uri)
           .fetch(code, code_verifier)
