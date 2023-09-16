@@ -118,7 +118,6 @@ jobs:
       - name: Build reports
         id: reports
         run: |
-          ls .
           ls -F . | grep -v / | xargs -I ARG sh -c '../template.sh "ARG" >> ../result.txt'
         working-directory: ${{ github.workspace }}/outputs
 
